@@ -18,9 +18,31 @@ Route::get('/', function () {
 Route::get('customer/{id}', function($id) {
     $customer = App\Customer::find($id);
     echo $customer->name;
+
+    echo '<ul>';
+    foreach($customer->orders as $order) {
+        echo '<li>' . $order->name . '</li>';
+    }
+    echo '</ul>';
 });
 
 Route::get('customer_name', function() {
     $customer = App\Customer::where('name', '=', 'Tony')->first();
     echo $customer->ID;
+});
+
+Route::get('orders', function() {
+    $orders = App\Order::all();
+    foreach($orders as $order){
+        echo $order->name . ' belongs to ' . $order->customer->name . '<br>';
+    }
+});
+
+Route::get('mypage', function () {
+    $data = array(
+        'var1' => 'Hamburger',
+        'var2' => 'Hot Dog',
+        'var3' => 'French Fries'
+    );
+    return view('mypage', $data);
 });
