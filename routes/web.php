@@ -42,7 +42,8 @@ Route::get('mypage', function () {
     $data = array(
         'var1' => 'Hamburger',
         'var2' => 'Hot Dog',
-        'var3' => 'French Fries'
+        'var3' => 'French Fries',
+        'orders' => App\Order::all()
     );
     return view('mypage', $data);
 });
