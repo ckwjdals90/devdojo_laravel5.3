@@ -15,16 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('customer/{id}', function($id) {
-    $customer = App\Customer::find($id);
-    echo $customer->name;
+Route::get('customer/{id}', 'CustomerController@customer');
 
-    echo '<ul>';
-    foreach($customer->orders as $order) {
-        echo '<li>' . $order->name . '</li>';
-    }
-    echo '</ul>';
-});
 
 Route::get('customer_name', function() {
     $customer = App\Customer::where('name', '=', 'Tony')->first();
@@ -46,4 +38,18 @@ Route::get('mypage', function () {
         'orders' => App\Order::all()
     );
     return view('mypage', $data);
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => ['admin']], function() {
+  Route::get('admin', function() {
+    echo 'You have access!';
+  });
 });
